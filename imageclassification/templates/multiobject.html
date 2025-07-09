@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multi-Object Detection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #6f42c1;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            margin: 20px 0;
+        }
+
+        input[type="submit"] {
+            background-color: #6f42c1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #5a32a3;
+        }
+
+        img {
+            margin-top: 20px;
+            border-radius: 8px;
+            max-width: 100%;
+            border: 2px solid #ccc;
+        }
+
+        a.button {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #007acc;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ Multi-Object Detection</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required><br>
+            <input type="submit" value="Detect Objects">
+        </form>
+
+        {% if detected_image %}
+            <h3>Detected Objects</h3>
+            <img src="{{ url_for('serve_video', filename=detected_image) }}">
+        {% endif %}
+
+        <a href="{{ url_for('index') }}" class="button">← Back to Image Classifier</a>
+    </div>
+</body>
+</html>

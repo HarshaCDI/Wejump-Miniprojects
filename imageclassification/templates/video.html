@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Object Detection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            margin: 20px 0;
+        }
+
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1e7e34;
+        }
+
+        video {
+            margin-top: 20px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+
+        a.button {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #007acc;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎥 Video Object Detection</h1>
+        <form method="POST" action="/video" enctype="multipart/form-data">
+            <input type="file" name="video" accept="video/*" required><br>
+            <input type="submit" value="Upload & Detect Objects">
+        </form>
+
+        {% if video_path %}
+            <h2>📽️ Processed Video</h2>
+            <video width="500" height="360" controls>
+                <source src="{{ url_for('serve_video', filename=video_path) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p><a href="{{ url_for('serve_video', filename=video_path) }}" class="button" download>⬇ Download Processed Video</a></p>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}" class="button">← Back to Image Classifier</a>
+    </div>
+    
+</body>
+</html>
+

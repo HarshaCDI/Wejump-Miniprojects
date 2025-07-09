@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Classifier</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #007acc;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            margin: 20px 0;
+        }
+
+        input[type="submit"] {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #005f99;
+        }
+
+        img {
+            margin-top: 15px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+
+        .result {
+            margin-top: 25px;
+            background: #e7f4ea;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            color: #2e7d32;
+            box-shadow: 0 0 5px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 AI Image Classifier</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required><br>
+            <input type="submit" value="Upload & Predict">
+        </form>
+
+        {% if uploaded_image %}
+            <h2>📷 Uploaded Image</h2>
+            <img src="{{ url_for('uploaded_file', filename=uploaded_image) }}" width="300">
+        {% endif %}
+
+        {% if prediction %}
+            <div class="result">
+                <h2>🔍 Prediction</h2>
+                <p><strong>{{ prediction }}</strong></p>
+            </div>
+        {% endif %}
+    </div>
+    <p>Want to detect multiple objects in an image?</p>
+<a href="{{ url_for('multiobject') }}" style="
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #6f42c1;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 16px;
+">🖼️ Go to Multi-Object Detection</a>
+
+<br/>
+    <!-- Add below your existing form in the container div -->
+<hr style="margin: 30px 0;">
+<p>Want to detect objects in a video?</p>
+<a href="{{ url_for('video_page') }}" style="
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 16px;
+">🎥 Go to Video Detection</a>
+
+</body>
+</html>
