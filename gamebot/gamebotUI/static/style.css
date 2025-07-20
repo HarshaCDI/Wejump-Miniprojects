@@ -1,0 +1,78 @@
+body {
+  background: linear-gradient(135deg, #78eb74, #ace5ca);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #fff;
+  margin-top: 20px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-gap: 10px;
+  justify-content: center;
+  margin: 40px auto;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  font-size: 48px;
+  font-weight: bold;
+  color: #333;
+  line-height: 100px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.cell:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+}
+
+.cell.X {
+  color: #FF6B6B; /* Player */
+}
+
+.cell.O {
+  color: #4ECDC4; /* Bot */
+}
+
+button {
+  background-color: #FF6B6B;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #ff4c4c;
+}
+
+@media (max-width: 500px) {
+  #board {
+    grid-template-columns: repeat(3, 70px);
+    grid-gap: 8px;
+  }
+
+  .cell {
+    width: 70px;
+    height: 70px;
+    font-size: 36px;
+    line-height: 70px;
+  }
+}

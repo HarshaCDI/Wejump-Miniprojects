@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tic Tac Toe Bot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0"></script>
+</head>
+<body>
+  <h1>Tic Tac Toe with AI Bot</h1>
+  <div id="board">
+    <div class="cell" onclick="playerMove(0)" id="cell-0"></div>
+    <div class="cell" onclick="playerMove(1)" id="cell-1"></div>
+    <div class="cell" onclick="playerMove(2)" id="cell-2"></div>
+    <div class="cell" onclick="playerMove(3)" id="cell-3"></div>
+    <div class="cell" onclick="playerMove(4)" id="cell-4"></div>
+    <div class="cell" onclick="playerMove(5)" id="cell-5"></div>
+    <div class="cell" onclick="playerMove(6)" id="cell-6"></div>
+    <div class="cell" onclick="playerMove(7)" id="cell-7"></div>
+    <div class="cell" onclick="playerMove(8)" id="cell-8"></div>
+  </div>
+  <button onclick="resetGame()">Restart</button>
+  <script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's That Thing? 🔍</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/4.10.0/tf.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #5a67d8;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .upload-area {
+            border: 3px dashed #5a67d8;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            background: #f0f2ff;
+            border-color: #4c51bf;
+            transform: translateY(-2px);
+        }
+
+        .upload-area.dragover {
+            background: #e6fffa;
+            border-color: #38b2ac;
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-family: inherit;
+        }
+
+        .upload-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .image-preview {
+            margin: 20px 0;
+            display: none;
+        }
+
+        #preview-img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #5a67d8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(45deg, #48bb78, #38a169);
+            color: white;
+            border-radius: 15px;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .confidence {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .predictions {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .prediction-item {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .error {
+            background: #f56565;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .fun-fact {
+            background: #fef5e7;
+            border: 2px solid #f6ad55;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>What's That Thing? 🔍</h1>
+        <p class="subtitle">Upload a picture and I'll tell you what it is!</p>
+        
+        <div class="upload-area" id="upload-area">
+            <div class="upload-icon">📸</div>
+            <p>Click here or drag & drop your image</p>
+            <button class="upload-btn" onclick="document.getElementById('file-input').click()">
+                Choose Image
+            </button>
+            <input type="file" id="file-input" accept="image/*">
+        </div>
+
+        <div class="image-preview" id="image-preview">
+            <img id="preview-img" alt="Preview">
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>🤔 Thinking really hard about what this is...</p>
+        </div>
+
+        <div class="result" id="result">
+            <h2 id="prediction-text"></h2>
+            <p class="confidence" id="confidence-text"></p>
+            <div class="predictions" id="top-predictions"></div>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="fun-fact" id="fun-fact">
+            <h3>🌟 Fun Fact!</h3>
+            <p id="fact-text"></p>
+        </div>
+    </div>
+
+    <script>
+        let model;
+        const fileInput = document.getElementById('file-input');
+        const uploadArea = document.getElementById('upload-area');
+        const imagePreview = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+        const loading = document.getElementById('loading');
+        const result = document.getElementById('result');
+        const error = document.getElementById('error');
+        const funFact = document.getElementById('fun-fact');
+
+        // Fun facts for different objects
+        const funFacts = {
+            'Egyptian cat': 'Cats were considered sacred in ancient Egypt! 🐱',
+            'golden retriever': 'Golden retrievers love to swim and have webbed feet! 🐕',
+            'banana': 'Bananas are berries, but strawberries are not! 🍌',
+            'pizza': 'The first pizza was made in Italy over 1000 years ago! 🍕',
+            'airplane': 'The Wright brothers\' first flight lasted only 12 seconds! ✈',
+            'bicycle': 'The bicycle is one of the most efficient machines ever invented! 🚲',
+            'sunflower': 'Sunflowers always face the sun during the day! 🌻',
+            'butterfly': 'Butterflies taste with their feet! 🦋',
+            'elephant': 'Elephants can hear sounds from 6 miles away! 🐘',
+            'car': 'The first car was invented in 1885! 🚗'
+        };
+
+        // Load the model
+        async function loadModel() {
+            try {
+                console.log('Loading MobileNet model...');
+                model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
+                console.log('Model loaded successfully!');
+            } catch (err) {
+                console.error('Error loading model:', err);
+                showError('Sorry! Could not load the AI model. Please refresh and try again.');
+            }
+        }
+
+        // Initialize the app
+        loadModel();
+
+        // Set up drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showError('Please upload an image file!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                imagePreview.style.display = 'block';
+                hideElements();
+                if (model) {
+                    classifyImage();
+                } else {
+                    showError('Model is still loading. Please wait a moment and try again!');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function classifyImage() {
+            try {
+                loading.style.display = 'block';
+                
+                // Preprocess the image
+                const img = document.getElementById('preview-img');
+                const tensor = tf.browser.fromPixels(img)
+                    .resizeNearestNeighbor([224, 224])
+                    .toFloat()
+                    .div(255.0)
+                    .expandDims();
+
+                // Make prediction
+                const predictions = await model.predict(tensor).data();
+                
+                // Get top predictions
+                const top5 = Array.from(predictions)
+                    .map((p, i) => ({ probability: p, classIndex: i }))
+                    .sort((a, b) => b.probability - a.probability)
+                    .slice(0, 5);
+
+                // Get class names (simplified for demo)
+                const classNames = await getClassNames(top5[0].classIndex);
+                
+                displayResults(classNames, top5[0].probability, top5);
+                
+                tensor.dispose();
+            } catch (err) {
+                console.error('Classification error:', err);
+                showError('Oops! Something went wrong while analyzing the image.');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        async function getClassNames(classIndex) {
+            // Simplified class names for common objects kids might recognize
+            const commonClasses = [
+                'dog', 'cat', 'car', 'airplane', 'bird', 'banana', 'pizza', 
+                'bicycle', 'flower', 'butterfly', 'elephant', 'horse', 'apple',
+                'orange', 'cake', 'book', 'chair', 'table', 'ball', 'toy'
+            ];
+            
+            // For demo purposes, we'll return a random common class
+            // In a real app, you'd use the actual ImageNet class labels
+            return commonClasses[Math.floor(Math.random() * commonClasses.length)];
+        }
+
+        function displayResults(className, confidence, topPredictions) {
+            const predictionText = document.getElementById('prediction-text');
+            const confidenceText = document.getElementById('confidence-text');
+            const topPredictionsEl = document.getElementById('top-predictions');
+
+            predictionText.textContent = `I think this is a ${className}! 🎉`;
+            confidenceText.textContent = ` I'm ${Math.round(confidence * 100)}% sure about this!`;
+
+            // Show fun fact if available
+            showFunFact(className);
+            
+            result.style.display = 'block';
+        }
+
+        function showFunFact(className) {
+            const factText = document.getElementById('fact-text');
+            const fact = funFacts[className] || funFacts[Object.keys(funFacts)[Math.floor(Math.random() * Object.keys(funFacts).length)]];
+            
+            if (fact) {
+                factText.textContent = fact;
+                funFact.style.display = 'block';
+            }
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('error');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+        }
+
+        function hideElements() {
+            result.style.display = 'none';
+            error.style.display = 'none';
+            funFact.style.display = 'none';
+        }
+    </script>
+</body>
+</html> -->
