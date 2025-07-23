@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🎵 Music Genre Classifier</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding-top: 60px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #f1c40f;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        input[type="file"] {
+            margin: 15px 0;
+            background-color: #ecf0f1;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            width: 250px;
+        }
+
+        button {
+            background-color: #f39c12;
+            border: none;
+            padding: 12px 24px;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #d35400;
+        }
+
+        .result-box {
+            margin-top: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        audio {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .genre {
+            font-size: 1.5em;
+            margin-top: 15px;
+            color: #2ecc71;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🎧 AI Music Genre Classifier</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="audio" accept="audio/*" required><br>
+        <button type="submit">🎶 Upload & Classify</button>
+    </form>
+
+    {% if audio_file %}
+        <div class="result-box">
+            <h3>Preview of Your Audio:</h3>
+            <audio controls>
+                <source src="{{ audio_file }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <div class="genre">
+                🎼 Predicted Genre: <strong>{{ genre }}</strong>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if spectrogram %}
+    <div style="margin-top: 30px;">
+        <h3>🎛 Mel Spectrogram:</h3>
+        <img src="{{ spectrogram }}" alt="Mel Spectrogram" style="width:100%; max-width:600px; border-radius:10px; box-shadow: 0 0 12px rgba(0,0,0,0.5);" />
+    </div>
+{% endif %}
+
+
+    <footer>
+        Created for Educational Use by CDI
+    </footer>
+
+</body>
+</html>
